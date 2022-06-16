@@ -2,13 +2,9 @@
 import prisma from "../../../lib/prisma";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-type Data = {
-  name: string;
-};
-
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Data>
+  res: NextApiResponse
 ) {
   let post: any = await await prisma.post.findUnique({
     where: { id: req.query.id.toString() },
