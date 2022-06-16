@@ -1,15 +1,18 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import prisma from "@/lib/prisma";
 import type { NextApiRequest, NextApiResponse } from "next";
-
-type Data = {
-  name: string;
-};
+import NextCors from "nextjs-cors";
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Data>
+  res: NextApiResponse
 ) {
+  await NextCors(req, res, {
+    // Options
+    methods: ["GET"],
+    origin: "*",
+    optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+  });
   let user: any = await await prisma.user.findUnique({
     where: { id: req.query.id.toString() },
   });
